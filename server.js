@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, SECRET } = process.env;
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("./db/db");
@@ -32,7 +33,12 @@ app.use("/auth", AuthRouter);
 io.on("connection", (socket) => {
   console.log("a user connected");
   socket.on("chat message", (msg) => {
-    io.emit("chat message", { text: msg });
+    const payload = jwt.verify(msg.token, SECRET);
+    if (payload) {
+      io.emit("chat message", { text: msg.text, username: payload.username });
+    } else {
+      console.log("Invalid");
+    }
   });
   socket.on("disconnect", () => {
     console.log("user disconnected");
