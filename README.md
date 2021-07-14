@@ -8,14 +8,12 @@ https://capstone-websockets.herokuapp.com/
 
 ## TECHNOLOGIES USED
 
-- JavaScript
-- Node
+- Node.js
 - Express
 - MongoDB
 - Mongoose
 - Socket.IO
 - JSON Web Tokens
-- Postman
 
 ## PROJECT SUMMARY
 
